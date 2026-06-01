@@ -15,7 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from .views import landingview, gamelistview, librarylistview
 
 urlpatterns = [
-    
+    path('home/', landingview),
+
+    # All games url's
+    path('allgames/', gamelistview),
+
+    # My library url's
+    path('mylibrary/', librarylistview),
+
 ]
