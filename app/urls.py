@@ -1,29 +1,14 @@
-"""
-URL configuration for GameDiary project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.urls import path
-from .views import landingview, gamelistview, librarylistview
+from .views import landingview, gamelistview, mylibraryview, addnewgame, addgametolib
 
 urlpatterns = [
-    path('home/', landingview),
+    path('', landingview),
 
     # All games url's
     path('allgames/', gamelistview),
+    path('add-game/', addnewgame),
 
     # My library url's
-    path('mylibrary/', librarylistview),
-
+    path('mylibrary/', mylibraryview),
+    path('add-gametolib/', addgametolib), 
 ]

@@ -2,6 +2,89 @@
 
 {% block content %}
 
+
+
 <h1> All games </h1>
+
+<br />
+<!-- Lisäyslomakkeen paikka -->
+<div id="add-div"></div>
+<br /> 
+
+<a onclick="showaddform()" class="btn btn-primary mb-4">Add new game</a>
+<br />
+
+{% for g in allgames %}
+<div class="card border-dark mb-3" style="max-width: 50%; text-align: left;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-4">
+                {% if g.cover %}
+                <img src="{{ g.cover.url }}" style="height: 150px;" class="img-fluid rounded" alt="{{ game.gametitle }}">
+                <p>{{game.cover.url}}</p>
+                {% endif %}
+            </div>
+            <div class="col-sm-8">
+                <h5 class="card-title">{{g.gametitle}}</h5>
+
+                <p class="card-text">Genre: {{g.genre}}</p>
+
+                <p class="card-text">Release year: {{g.releaseyear}}</p>
+                <p class="card-text">Description: {{g.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% empty %}
+
+<h2>No games found</h2>
+
+{% endfor %}
+
+<script>
+
+    let y = `
+    <h2>Add new game</h2>
+    
+    <div class="card border-secondary mb-3" style="width: 400px;">
+        <div class="card-body">
+            <form method="post" action="/add-game/" enctype="multipart/form-data">
+                {%csrf_token %} 
+                <div class="col-sm-12" style="text-align: left;">
+                <label for="gametitle" class="form-label mt-4">Game title</label>
+                <input class="form-control" type="text" name="gametitle">
+                <label for="releaseyear" class="form-label mt-4">Release Year</label>
+                <input class="form-control" type="number" name="releaseyear">
+                <label for="descriptiontextarea" class="form-label mt-4">Description</label>
+                <textarea class="form-control" name="description" id="descriptionTextarea" rows="3" style="height: 128px;"></textarea>
+                
+                <br />
+                <label for="genre">Select genre</label>
+                <select class="form-select" id="genre" name="genre">
+                {% for g in genres %}
+                  <option value="{{g.id}}">{{g.name}}</option>
+                {% endfor %}
+                </select>
+                <label for="formFile" class="form-label mt-4">Cover image</label>
+                <input class="form-control" name="cover" type="file" accept="image/*" id="formFile">
+                </div>
+                <br /> 
+                <input type="submit" value="Confirm" class="btn btn-success btn-sm" name="">
+                <input type="submit" id="hide-btn" class="btn btn-secondary btn-sm" onclick="hideaddform()" value="Cancel" name="">
+                
+            </form>
+        </div>
+    </div>`
+
+    function showaddform() {
+        document.getElementById("add-div").innerHTML = y
+    }
+
+    function hideaddform() {
+        document.getElementById("add-div").innerHTML = ""
+    }
+
+</script>
 
 {% endblock %}

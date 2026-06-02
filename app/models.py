@@ -30,3 +30,6 @@ class GameLibrary(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     added = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="owned")
+
+    class Meta:
+        unique_together = ("user", "game")
