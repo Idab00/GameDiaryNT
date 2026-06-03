@@ -1,9 +1,18 @@
 from django.urls import path
-from .views import landingview, gamelistview, mylibraryview, addnewgame, addgametolib, edit_game_get, edit_game_post, \
-delete_game, confirm_delete_game
+from .views import landingview, gamelistview, mylibraryview, addnewgame, addtolibrary, edit_game_get, \
+ edit_game_post, delete_game, confirm_delete_game, signup_post, signup_get, login_action, loginview, logout_action
 
 urlpatterns = [
     path('', landingview),
+
+    # Signup url's
+    path('signup-post/', signup_post),
+    path('signup-get/', signup_get),
+
+    # Login and logout url's
+    path('login-action/', login_action),
+    path('login/', loginview),
+    path('logout/', logout_action),
 
     # All games url's
     path('allgames/', gamelistview),
@@ -15,5 +24,5 @@ urlpatterns = [
 
     # My library url's
     path('mylibrary/', mylibraryview),
-    path('add-gametolib/', addgametolib), 
+    path('add-to-library/', addtolibrary)
 ]

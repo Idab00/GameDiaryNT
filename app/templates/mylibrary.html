@@ -4,5 +4,79 @@
 
 <h1> My games </h1>
 
+<a onclick="showaddform()" class="btn btn-primary mb-4">Add new game</a>
+<br />
+<!-- Lisäyslomakkeen paikka -->
+<div id="add-div"></div>
+<br /> 
+
+{% for m in mylibrary %}
+
+<div class="card border-dark mb-3" style="max-width: 50%; text-align: left;">
+    <div class="card-header d-flex justify-content-between">
+
+        <h2 class="card-title">{{m.game.gametitle}}</h2>
+
+        <div class="d-flex gap-2">
+
+            <a href="/edit-status/{{m.id}}/" class="btn btn-secondary">Edit status</a>
+
+            <a href="/confirm-delete-libgame/{{m.id}}/"class="btn btn-secondary" style="text-align: right;">Delete</a>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-sm-4">
+                {% if m.game.cover %}
+                <img src="{{ m.game.cover.url }}" style="height: 150px;" class="img-fluid rounded" alt="{{ m.gametitle }}">
+                <p>{{m.cover.url}}</p>
+                {% endif %}
+            </div>
+
+            <div class="col-sm-8">
+                <p class="card-text">Genre: {{m.game.genre}}</p>
+                <p class="card-text">Release year: {{m.game.releaseyear}}</p>
+                <p class="card-text">Description: {{m.game.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% empty %}
+
+<h2>No games found</h2>
+
+{% endfor %}
+
+<script>
+
+    let y = `    
+    <h2>Add new game</h2>
+    <div class="card border-secondary mb-3" style="width: 400px;">
+        <div class="card-body">
+            <form method="post" action="/add-to-library/" enctype="multipart/form-data">
+                {%csrf_token %} 
+                <select class="form-select" name="gameid">
+                    {% for game in games %}
+                    <option value="{{ game.id }}">{{game.gametitle}}</option>
+                    {% endfor %}
+                </select>
+                <br /> 
+                <input type="submit" value="Confirm" class="btn btn-success btn-sm" name="">
+                <input type="button" id="hide-btn" class="btn btn-secondary btn-sm" onclick="hideaddform()" value="Cancel" name="">
+            </form>
+        </div>
+    </div>`
+
+    function showaddform() {
+        document.getElementById("add-div").innerHTML = y
+    }
+
+    function hideaddform() {
+        document.getElementById("add-div").innerHTML = ""
+    }
+</script>
 
 {% endblock %}
