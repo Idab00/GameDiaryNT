@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+import requests 
+from django.conf import settings
+from django.http import JsonResponse
 from .models import Game, GameLibrary,Genre
 
 def landingview(request):
@@ -20,6 +23,12 @@ def addnewgame(request):
 
     Game(gametitle = a, description = b, releaseyear = c,cover = d, genre = Genre.objects.get(id = e)).save()
     return redirect(request.META['HTTP_REFERER'])
+
+def searchgame(request):
+    query = request.GET.get("q")
+    url = "https://api.rawg.io/api/games"
+    response = requests.get(url,params={"key": settings.RAWG_API_KEY, "search": query})
+    return JsonResponse(response.json())
 
 
 # My library views
