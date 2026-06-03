@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="card" style="width: 35rem;">
+    <div class="card-header">
+
+        <h5>Editing {{game.gametitle}}</h5>
+
+        <div class="card-body">
+            <form method="post" style="text-align: left;" action="/edit-game-post/{{game.id}}/" enctype="multipart/form-data">
+
+                {%csrf_token %}
+                <div class="form-group">
+                    <label>Release year</label>
+                    <input type="number" name="releaseyear" min="1950" max="2030" value={{game.releaseyear}}>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>Genre</label>
+                    <select class="form-select" name="genre">
+                    {% for g in genres %}
+                    <option value="{{g.id}}"{% if g.id == game.genre.id %}selected{% endif %}>{{g.name}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" name="description" rows="3" style="height: 128px;">{{game.description}}</textarea>
+                </div>
+                <br />
+                <div class="form-group">
+                <label for="formFile" class="form-label mt-4">Cover image</label>
+                <input class="form-control" name="cover" type="file" accept="image/*" id="formFile">
+                </div>
+                <br />
+                <div class="d-flex gap-5">
+                    <input type="submit" value="Update" class="btn btn-secondary btn-sm">
+                    <input type="button" onclick="window.location.href='/allgames/'" id="hide-btn"
+                        class="btn btn-secondary btn-sm" value="Cancel">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

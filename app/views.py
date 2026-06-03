@@ -21,6 +21,36 @@ def addnewgame(request):
     Game(gametitle = a, description = b, releaseyear = c,cover = d, genre = Genre.objects.get(id = e)).save()
     return redirect(request.META['HTTP_REFERER'])
 
+def edit_game_get(request, id):
+        game = Game.objects.get(id = id)
+        genre = Genre.objects.all()
+        context = {'game': game, 'genres': genre}
+        return render (request,"edit_game.html",context)
+
+def edit_game_post(request, id):
+        game = Game.objects.get(id = id)
+        game.releaseyear = request.POST['releaseyear']
+        game.genre = Genre.objects.get(id=request.POST['genre'])
+        game.description = request.POST['description']
+        if 'cover' in request.FILES:
+            game.cover = request.FILES['cover']
+
+        game.save()
+        return redirect(gamelistview)
+
+def confirm_delete_game(request, id):
+    game = Game.objects.get(id = id)
+    context = {'game': game}
+    return render (request,"confirmdelgame.html",context)
+
+
+def delete_game(request, id):
+    game = Game.objects.get(id = id)
+    if game.cover:
+         game.cover.delete(save=False)
+    game.delete()
+    return redirect(gamelistview)
+
 
 # My library views
 

@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from datetime import date
+
 
 # Pelin genre   
 class Genre(models.Model):
@@ -12,9 +15,11 @@ class Genre(models.Model):
 class Game(models.Model):
     gametitle = models.CharField(max_length=200, default="game")
     description = models.TextField()
-    releaseyear = models.PositiveIntegerField()
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     cover = models.ImageField(upload_to="covers/", blank=True, null=True)
+    releaseyear = models.IntegerField(
+        validators=[MinValueValidator(1950), MaxValueValidator(date.today().year)]
+    )
 
     def __str__(self):
         return self.gametitle
