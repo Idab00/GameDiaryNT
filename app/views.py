@@ -5,7 +5,6 @@ from .models import Game, GameLibrary, Genre
 import requests 
 from django.conf import settings
 from django.http import JsonResponse
-from .models import Game, GameLibrary,Genre
 
 def landingview(request):
     return render(request, 'landingpage.html')

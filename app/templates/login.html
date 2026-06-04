@@ -2,23 +2,23 @@
 
 {% block content %}
 <div class="container">
-    <div class="card" style="width: 25rem; margin-top: 50px;">
+    <div class="card border-light mb3" style="width: 30rem; margin-top: 50px;">
         <div class="card-header">
-            <h5>Login</h5>
+            <h1>Login</h1>
             <div class="card-body">
-                <form id="myForm" method="post" action="/login-action/">
+                <form id="myForm" method="post"  action="/login-action/">
                     {%csrf_token %}
                     <div class="form-group">
-                        <label>user name</label>
+                        <label>Username</label>
                         <input autofocus type="text" name="username">
                     </div>
-
+                    <br />
                     <div class="form-group">
-                        <label>password</label>
+                        <label>Password</label>
                         <input type="password" name="password">
                     </div>
-                    <input type="submit" value="Login" class="btn btn-success btn-sm">
-
+                    <br />
+                    <input type="submit" value="Login" class="btn btn-success btn-sm ">
                     <input type="button" onclick="reset()" class="btn btn-secondary btn-sm" value="Reset">
                 </form>
             </div>

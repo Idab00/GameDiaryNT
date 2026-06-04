@@ -1,7 +1,9 @@
 {% extends 'index.html' %}
-
+{% load static %}
 {% block content %}
-
+<br />
 <h1> Welcome to GameDiary! </h1>
-
+<p class="text-body">Track your game collection, manage your library and keep
+    track of what you're currently playing.</p>
+<img src="{% static 'images/landing.jpg' %}"class="img-fluid rounded" alt="Game Diary">
 {% endblock %}
