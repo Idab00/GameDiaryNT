@@ -50,11 +50,12 @@
     <div class="card border-secondary mb-3" style="width: 400px;">
         <div class="card-body">
             {%csrf_token %} 
-            <div class="input-group">
+            <div class="input-group gap-2">
                     <input class="form-control" id="game-search" placeholder="Search game by name">
                     <button class="btn btn-secondary" onclick="searchRawg()">Search</button>
                     <select class="form-select mt-2" id="game-results" onchange="selectGame()">Select game</select>
             </div>
+            <div id="preview"></div>
             <form method="post" action="/add-game/" enctype="multipart/form-data">
             {%csrf_token %} 
                 <div class="col-sm-12" style="text-align: left;">
@@ -83,7 +84,7 @@
             </form>
         </div>
     </div>`
-    let game = [];
+    let games = [];
     async function searchRawg() {
         const query = document.getElementById("game-search").value;
         const response = await fetch(`/search-game/?q=${query}`);
@@ -110,6 +111,11 @@
         game.released
             ? game.released.substring(0,4)
             : "";
+
+    document.getElementById("preview").innerHTML = `
+    <h5>${game.name}</h5>
+    <img src="${game.background_image}"style="width:200px">
+    <p>Released: ${game.released}</p>`;
 }
 
     
