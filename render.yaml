@@ -2,7 +2,7 @@ databases:
   - name: gamediary_db
     plan: free
     databaseName: gamediary
-    user: ida
+    user: ida2
 
 services:
   - type: web
