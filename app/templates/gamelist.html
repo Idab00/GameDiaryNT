@@ -51,9 +51,9 @@
         <div class="card-body">
             {%csrf_token %} 
             <div class="input-group gap-2">
-                    <input class="form-control" id="game-search" placeholder="Search game by name">
+                    <input class="form-control" list="games" id="game-search" placehoder="Search game by name" onchange="selectGame()">
+                    <datalist id="games"></datalist>
                     <button class="btn btn-secondary" onclick="searchRawg()">Search</button>
-                    <select class="form-select mt-2" id="game-results" onchange="selectGame()">Select game</select>
             </div>
             <div id="preview"></div>
             <form method="post" action="/add-game/" enctype="multipart/form-data">
@@ -86,37 +86,31 @@
     </div>`
     let games = [];
     async function searchRawg() {
-        const query = document.getElementById("game-search").value;
+        const query =
+        document.getElementById("game-search").value;
         const response = await fetch(`/search-game/?q=${query}`);
         const data = await response.json();
-        const select = document.getElementById("game-results");
-        console.log(data)
+        const datalist = document.getElementById("games");
         games = data.results;
-        select.innerHTML = '<option value="">Select a game...</option>';
-        games.forEach((game, index) => {
-            select.innerHTML += `
-            <option value="${index}">
-                ${game.name}
-            </option>`;
+        datalist.innerHTML = "";
+        games.forEach(game => {
+            datalist.innerHTML += `<option value="${game.name}">`;
         });
     }
+
     function selectGame() {
-
-    const index =
-        document.getElementById("game-results").value;
-    if (index === "") return;
-    const game = games[index];
-    document.getElementsByName("gametitle")[0].value = game.name;
-    document.getElementsByName("releaseyear")[0].value =
-        game.released
-            ? game.released.substring(0,4)
-            : "";
-
-    document.getElementById("preview").innerHTML = `
-    <h5>${game.name}</h5>
-    <img src="${game.background_image}"style="width:200px">
-    <p>Released: ${game.released}</p>`;
-}
+        const selectedName=document.getElementById("game-search").value;
+        const game = games.find(g => g.name === selectedName);
+        if (!game) return;
+        document.getElementById("gametitle").value = game.name;
+        document.getElementById("releaseyear").value = game.released ? game.released.substring(0,4): "";
+        document.getElementById("preview").innerHTML = `
+        <h5>${game.name}</h5>
+        <img src="${game.background_image}"
+             style="width:200px"
+             class="img-fluid rounded">
+        <p>Released: ${game.released}</p>`;
+    }
 
     
 
