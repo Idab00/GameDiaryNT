@@ -116,10 +116,12 @@ def mylibraryview(request):
         return render(request, 'landingpage.html')
     else:
         gamelib = GameLibrary.objects.filter(user=request.user)
-        context = {'mylibrary': gamelib, 'games': Game.objects.all()}
+        genre_id = request.GET.get("genre")
+        if genre_id:
+            gamelib = gamelib.filter(game__genre_id=genre_id)
+        context = {'mylibrary': gamelib, 'games': Game.objects.all(), 'genres': Genre.objects.all()}
         return render(request, 'mylibrary.html', context)
     
-
 def addtolibrary(request):
     if not request.user.is_authenticated:
         return render(request, 'landingpage.html')
@@ -127,3 +129,13 @@ def addtolibrary(request):
         a = Game.objects.get(id=request.POST["gameid"])
         GameLibrary.objects.get_or_create(user = request.user ,game = a)
         return redirect('/mylibrary/')
+    
+def edit_status_get(request, id):
+    librarygame = GameLibrary.objects.get(id=id, user=request.user)
+    return render(request, "edit_status.html", {"library_game": librarygame})
+
+def edit_status_post(request, id):
+    librarygame = GameLibrary.objects.get(id=id, user=request.user)
+    librarygame.status = request.POST["status"]
+    librarygame.save()
+    return redirect("/mylibrary/")

@@ -1,10 +1,24 @@
 {% extends 'index.html' %}
 
 {% block content %}
+<br/>
 
 <h1> My games </h1>
 
-<a onclick="showaddform()" class="btn btn-primary mb-4">Add new game</a>
+<h5>Welcome, {{ user.username }}</h5>
+<br/>
+<div class="d-flex justify-content-center align-items-center gap-3 mb-4">
+<a onclick="showaddform()" class="btn btn-primary">Add new game</a>
+<form method="get" class="d-flex align-items-center gap-1 mb-0">
+    <select name="genre" class="form-select">
+        <option value="">Sort by Genre</option>
+        {% for g in genres %}
+        <option value="{{g.id}}">{{g.name}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="filter" class="btn btn-secondary btn-sm">
+</form>
+</div>
 <br />
 <!-- Lisäyslomakkeen paikka -->
 <div id="add-div"></div>
@@ -17,9 +31,8 @@
 
         <h2 class="card-title">{{m.game.gametitle}}</h2>
 
-        <div class="d-flex gap-2">
-
-            <a href="/edit-status/{{m.id}}/" class="btn btn-secondary">Edit status</a>
+        <div class="d-flex gap-2 mb-3">
+            <a href="/edit-status-get/{{m.id}}/" class="btn btn-secondary">Edit status</a>
 
             <a href="/confirm-delete-libgame/{{m.id}}/"class="btn btn-secondary" style="text-align: right;">Delete</a>
 
@@ -36,6 +49,7 @@
             </div>
 
             <div class="col-sm-8">
+                <h5>Status: {{m.status}}</h5>
                 <p class="card-text">Genre: {{m.game.genre}}</p>
                 <p class="card-text">Release year: {{m.game.releaseyear}}</p>
                 <p class="card-text">Description: {{m.game.description}}</p>

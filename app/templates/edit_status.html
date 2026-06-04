@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="card" style="width: 35rem;">
+    <div class="card-header">
+
+        <h5>Editing: {{library_game.game.gametitle}}</h5>
+
+        <div class="card-body">
+            <form method="post" style="text-align: left;" action="/edit-status-post/{{library_game.id}}/">
+                {%csrf_token %}
+                <select name="status" class="form-select">
+                    <option value="owned">Owned</option>
+                    <option value="playing">Playing</option>
+                    <option value="completed">Completed</option>
+                </select>
+                <br />
+                <input type="submit" value="Save" class="btn btn-success">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
