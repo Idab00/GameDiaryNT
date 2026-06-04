@@ -119,6 +119,9 @@ def mylibraryview(request):
         genre_id = request.GET.get("genre")
         if genre_id:
             gamelib = gamelib.filter(game__genre_id=genre_id)
+        gamestatus = request.GET.get("status")
+        if gamestatus:
+            gamelib = gamelib.filter(status=gamestatus)
         context = {'mylibrary': gamelib, 'games': Game.objects.all(), 'genres': Genre.objects.all()}
         return render(request, 'mylibrary.html', context)
     
@@ -139,3 +142,18 @@ def edit_status_post(request, id):
     librarygame.status = request.POST["status"]
     librarygame.save()
     return redirect("/mylibrary/")
+
+def delete_library_game(request, id):
+    if not request.user.is_authenticated:
+        return render(request, 'landingpage.html')
+    else:
+        library_game = GameLibrary.objects.get(id=id, user=request.user)
+        library_game.delete()
+        return redirect(mylibraryview)
+    
+def confirm_delete_libgame(request, id):
+    if not request.user.is_authenticated:
+        return render(request, 'landingpage.html')
+    else:
+        library_game = GameLibrary.objects.get(id = id, user=request.user)
+        return render(request, "confirmdellib.html", {"library_game": library_game})

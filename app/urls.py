@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import landingview, gamelistview, mylibraryview, addnewgame, addtolibrary, edit_game_get, \
  edit_game_post, delete_game, confirm_delete_game, signup_post, signup_get, login_action, loginview, \
-logout_action, edit_status_get, edit_status_post
+logout_action, edit_status_get, edit_status_post, delete_library_game, confirm_delete_libgame
 
 urlpatterns = [
     path('', landingview),
@@ -28,4 +28,7 @@ urlpatterns = [
     path('add-to-library/', addtolibrary),
     path('edit-status-get/<int:id>/', edit_status_get),
     path('edit-status-post/<int:id>/', edit_status_post),
+    path('delete-library-game/<int:id>/', delete_library_game),
+    path('confirm-delete-libgame/<int:id>/', confirm_delete_libgame),
+
 ]

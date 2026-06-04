@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1 class="text-warning">Delete Game</h1>
+
+<div class="card border-warning mb-3" style="width: 50rem;">
+    <div class="card-body">
+        <h3 class="card-title text-warning">Confirm the removal of game from your library</h3>
+        <h5 class="card-text text-danger">Game: {{library_game.game.gametitle}}</h5>
+
+        <a href="/mylibrary/" class="btn btn-warning">Cancel</a>
+        <a href="/delete-library-game/{{library_game.id}}" class="btn btn-danger">Delete</a>
+
+    </div>
+</div>
+
+{% endblock %}
