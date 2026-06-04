@@ -21,8 +21,8 @@ services:
       - key: WEB_CONCURRENCY
         value: 4
       - key: DJANGO_SUPERUSER_USERNAME
-        value: "ida"
+        value: "ida2"
       - key: DJANGO_SUPERUSER_PASSWORD
-        value: "JLZminx#71"
+        value: "MoIXLj#07O"
       - key: DJANGO_SUPERUSER_EMAIL
         value: "super@upersuper.fi"
