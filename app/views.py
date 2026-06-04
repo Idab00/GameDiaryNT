@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models import Game, GameLibrary, Genre
+import requests 
+from django.conf import settings
+from django.http import JsonResponse
+from .models import Game, GameLibrary,Genre
 
 def landingview(request):
     return render(request, 'landingpage.html')
@@ -106,6 +110,12 @@ def delete_game(request, id):
             game.cover.delete(save=False)
         game.delete()
         return redirect(gamelistview)
+
+def searchgame(request):
+    query = request.GET.get("q")
+    url = "https://api.rawg.io/api/games"
+    response = requests.get(url,params={"key": settings.RAWG_API_KEY, "search": query})
+    return JsonResponse(response.json())
 
 
 # My library views
