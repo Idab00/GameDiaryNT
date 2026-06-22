@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(6)&i^@+x34toyf(0g&$^4d%t86!^5+m11eg02j@l3=q=%$o!n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -73,14 +73,25 @@ DATABASES = {
     }
 }
 '''
-# Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'gamediary_db',
+        'USER': 'postgres',
+        'PASSWORD': 'ShimKiE2#91',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }
+}
+
+# Replace the SQLite DATABASES configuration with PostgreSQL:
+'''DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
         default='postgresql://postgres:postgres@localhost:5432/gamediary_db',
         conn_max_age=600
     )
-}
+}'''
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
